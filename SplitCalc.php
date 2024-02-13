@@ -191,9 +191,9 @@ $episodeData = @file_get_contents('https://podcastindex.org/api/episodes/byfeedi
 
         //If anything changes, make positive & recalculate.
         $('form').on('change', 'input', function() { 
+          $(this).val(posInt($(this).val())); 
           str=$(this).attr('id');
           if((str.substring(0, str.indexOf('-'))=='remote' || str.substring(0, str.indexOf('-'))=='local') && $(this).val()>100){ $(this).val(100); }
-          $(this).val(posInt($(this).val())); 
           splitCalc(); 
         });
         //Time slider too
