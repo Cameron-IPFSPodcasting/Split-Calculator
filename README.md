@@ -1,16 +1,13 @@
 # Podcasting 2.0 Split Calculator
 This is a Split Calculator to demonstrate Podcasting 2.0 Boost calculations based on the [PodcastIndex Specification](https://github.com/Podcastindex-org/podcast-namespace/blob/main/value/value.md). The concept is to strictly follow the specification. Issues can be for bugs or discussion of topics not found in the specification. This calculator will be updated to follow the spec. It is not intended to implement fixes that aren't first outlined in the spec.
 
-###Demo
-
+### Demo
 Demo available at https://ipfspodcasting.net/SplitCalc.php
 
-###Install
-
+### Install
 To "install", simply copy the PHP file to any capable web server.
 
-###Usage
-
+### Usage
 You can enter a boost amount, change the fee flag, edit shares, and adjust the time slider to activate VTS (and edit VTS start, duation, etc.). The page will adjust splits, normalize percentages, and calculate sats.
 
 Remote time splits (VTS) can be followed to calculate recursive splits by clicking "Split Inception!" in an active VTS.
