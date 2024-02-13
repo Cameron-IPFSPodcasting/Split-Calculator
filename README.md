@@ -11,6 +11,7 @@ To "install", simply copy the PHP file to any capable web server.
 You can enter a boost amount, change the fee flag, edit shares, and adjust the time slider to activate VTS (and edit VTS start, duation, etc.). The page will adjust splits, normalize percentages, and calculate sats.
 
 Remote time splits (VTS) can be followed to calculate recursive splits by clicking "Split Inception!" in an active VTS.
+
 ![inception](https://github.com/Cameron-IPFSPodcasting/Split-Calculator/assets/103131615/c22f3755-2f7f-4427-9d72-00d01db14616)
 
 URL accepts the following variables...
