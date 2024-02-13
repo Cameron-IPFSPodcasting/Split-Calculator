@@ -97,13 +97,8 @@ $episodeData = @file_get_contents('https://podcastindex.org/api/episodes/byfeedi
         $('select#episode').change(function() {
           epval=$(this).val();
           $.each(episodeData['items'], function(eindex, item) {
-            if(typeof item.value=='undefined'){  // Abort if there is no value block
-              $('div#itms').html('');
-              $('div#item').html('No Value Block!');
-              $('div#vts').html('');
-            }
-            else if(item.id==epval){
-              $('div#itms').html('Type='+item.value.model.type+' &nbsp; Method='+item.value.model.method+' &nbsp; Suggested='+item.value.model.suggested);
+            if(item.id==epval){
+              if(typeof item.value!='undefined'){ $('div#itms').html('Type='+item.value.model.type+' &nbsp; Method='+item.value.model.method+' &nbsp; Suggested='+item.value.model.suggested); }
               duration=item.duration;
               if(duration==-1){ duration=9999; }
               if(timesec==-1){ timesec=Math.floor(Math.random() * duration); }
@@ -114,20 +109,22 @@ $episodeData = @file_get_contents('https://podcastindex.org/api/episodes/byfeedi
               var evval='';
               evval+='<table>';
               evval+='<tr><th class="boost">Sats</th><th class="boost">Percent</th><th>Name</th><th>Split</th><th>Fee</th></tr>';
-              $.each(item.value.destinations, function(vindex, value) {
-                recip = value.address+'|'+value.customKey+'|'+value.customValue;  // Hash to define recipients
-                reciphash = recip.hashCode();
-                evval+='<tr id="item-'+reciphash+'">';
-                evval+='<td class="boost"><span id="item-'+reciphash+'-sats"></span></td>';
-                evval+='<td class="boost"><span id="item-'+reciphash+'-pct"></span></td>';
-                evval+='<td class="left"><span id="item-'+reciphash+'-name">'+value.name+'</span></td>';
-                evval+='<td><input id="item-'+reciphash+'-split" type="number" min="0" value="'+posInt(value.split)+'" /></td>';
-                if(value.fee==true){ feechk='checked="checked"'; }
-                else{ feechk=''; }
-                evval+='<td><input id="item-'+reciphash+'-fee" type="checkbox" '+feechk+' /></td>';
-                evval+='<td><i id="item-'+reciphash+'-delete" class="pi pi-delete"></i></td>';
-                evval+='</tr>';
-              });
+              if(typeof item.value!='undefined'){
+                $.each(item.value.destinations, function(vindex, value) {
+                  recip = value.address+'|'+value.customKey+'|'+value.customValue;  // Hash to define recipients
+                  reciphash = recip.hashCode();
+                  evval+='<tr id="item-'+reciphash+'">';
+                  evval+='<td class="boost"><span id="item-'+reciphash+'-sats"></span></td>';
+                  evval+='<td class="boost"><span id="item-'+reciphash+'-pct"></span></td>';
+                  evval+='<td class="left"><span id="item-'+reciphash+'-name">'+value.name+'</span></td>';
+                  evval+='<td><input id="item-'+reciphash+'-split" type="number" min="0" value="'+posInt(value.split)+'" /></td>';
+                  if(value.fee==true){ feechk='checked="checked"'; }
+                  else{ feechk=''; }
+                  evval+='<td><input id="item-'+reciphash+'-fee" type="checkbox" '+feechk+' /></td>';
+                  evval+='<td><i id="item-'+reciphash+'-delete" class="pi pi-delete"></i></td>';
+                  evval+='</tr>';
+                });
+              }
               evval+='</table>';
               $('div#item').html(evval);
 
