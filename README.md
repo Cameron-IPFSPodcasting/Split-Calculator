@@ -5,7 +5,7 @@ This is a Split Calculator to demonstrate Podcasting 2.0 Boost calculations base
 Demo available at https://ipfspodcasting.net/SplitCalc.php
 
 ### Install
-To "install", simply copy the PHP file to any capable web server.
+To "install", simply copy `SplitCalc.php` to any capable web server.
 
 ### Usage
 You can enter a boost amount, change the fee flag, edit shares, and adjust the time slider to activate VTS (and edit VTS start, duation, etc.). The page will adjust splits, normalize percentages, and calculate sats.
