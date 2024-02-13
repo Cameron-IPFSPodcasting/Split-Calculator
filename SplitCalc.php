@@ -100,8 +100,8 @@ $episodeData = @file_get_contents('https://podcastindex.org/api/episodes/byfeedi
             if(item.id==epval){
               if(typeof item.value!='undefined'){ $('div#itms').html('Type='+item.value.model.type+' &nbsp; Method='+item.value.model.method+' &nbsp; Suggested='+item.value.model.suggested); }
               duration=item.duration;
-              if(duration==-1){ duration=9999; }
-              if(timesec==-1){ timesec=Math.floor(Math.random() * duration); }
+              if(duration<0){ duration=9999; }
+              if(timesec==-1 || timesec>duration){ timesec=Math.floor(Math.random() * duration); }
               $('div#timeSlide').slider('option', 'max', duration);
               $('div#timeSlide').slider('value', timesec);
               $('#custom-handle').text(timesec);
@@ -171,8 +171,6 @@ $episodeData = @file_get_contents('https://podcastindex.org/api/episodes/byfeedi
               if(rcnt>0){ vtstotal+=remotevts; }
               if(lcnt>0){ vtstotal+=localvts; }
               $('div#vts').html(vtstotal);
-
-              if(vtstotal==''){ $('div#vtsvts').html(''); }  // Don't show VTS block if there aren't any VTS entries.
             }
           });
           splitCalc();  // Recalc when they change episodes
