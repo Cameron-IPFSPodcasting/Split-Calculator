@@ -148,7 +148,7 @@ $episodeData = @file_get_contents('https://podcastindex.org/api/episodes/byfeedi
                   localvts+='<td><input id="local-'+reciphash+'-start" type="number" min="0" value="'+value.startTime+'" /></td>';
                   localvts+='<td><input id="local-'+reciphash+'-duration" type="number" min="0" value="'+value.duration+'" /></td>';
                   localvts+='<td class="left"><span id="local-'+reciphash+'-name">'+value.name+'</span></td>';
-                  localvts+='<td><input id="local-'+reciphash+'-split" type="number" min="0" value="'+posInt(value.split)+'" /></td>';
+                  localvts+='<td><input id="local-'+reciphash+'-split" type="number" min="0" max="100" value="'+posInt(value.split)+'" /></td>';
                   localvts+='<td class="left"><span id="local-'+reciphash+'-note"></span></td>';
                   localvts+='</tr>';
                   lcnt++;
@@ -162,7 +162,7 @@ $episodeData = @file_get_contents('https://podcastindex.org/api/episodes/byfeedi
                   remotevts+='<td><input id="remote-'+reciphash+'-start" type="number" min="0" value="'+value.startTime+'" /></td>';
                   remotevts+='<td><input id="remote-'+reciphash+'-duration" type="number" min="0" value="'+value.duration+'" /></td>';
                   remotevts+='<td><input id="remote-'+reciphash+'-remotestart" type="number" min="0" value="'+value.remoteStartTime+'" /></td>';
-                  remotevts+='<td><input id="remote-'+reciphash+'-remotepct" type="number" min="0" value="'+value.remotePercentage+'" /></td>';
+                  remotevts+='<td><input id="remote-'+reciphash+'-remotepct" type="number" min="0" max="100" value="'+value.remotePercentage+'" /></td>';
                   remotevts+='<td class="left"><span id="remote-'+reciphash+'-note" feedguid="'+value.feedGuid+'" itemguid="'+value.itemGuid+'"></span></td>';
                   remotevts+='</tr>';
                   rcnt++;
@@ -191,7 +191,9 @@ $episodeData = @file_get_contents('https://podcastindex.org/api/episodes/byfeedi
 
         //If anything changes, make positive & recalculate.
         $('form').on('change', 'input', function() { 
-          this.value=posInt(this.value); 
+          str=$(this).attr('id');
+          if((str.substring(0, str.indexOf('-'))=='remote' || str.substring(0, str.indexOf('-'))=='local') && $(this).val()>100){ $(this).val(100); }
+          $(this).val(posInt($(this).val())); 
           splitCalc(); 
         });
         //Time slider too
@@ -369,6 +371,7 @@ $episodeData = @file_get_contents('https://podcastindex.org/api/episodes/byfeedi
     <div id="vts"></div>
   </div>
 
+  <a href="https://github.com/Cameron-IPFSPodcasting/Split-Calculator" target="_blank" style="margin-top: 1em; float: right;"><i class="pi pi-file" title="Source Code (GitHub)"></i></a>
   <h3 id="totals"></h3>
 </form>
 </body></html>
