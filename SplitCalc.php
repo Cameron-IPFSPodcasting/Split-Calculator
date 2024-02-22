@@ -65,11 +65,13 @@ $episodeData = @file_get_contents('https://podcastindex.org/api/episodes/byfeedi
 
         // Populate Channel Level Splits
         var chval='';
+        subhash=2;
         chval+='<table>';
         chval+='<tr><th class="boost">Sats</th><th class="boost">Percent</th><th>Name</th><th>Split</th><th>Fee</th><th></th><th>Notes</th></tr>';
         $.each(feedData['feed']['value']['destinations'], function(index, value) {
           recip = value.address+'|'+value.customKey+'|'+value.customValue;  // Hash to define recipients
           reciphash = recip.hashCode();
+          if(chval.indexOf(reciphash) != -1){ reciphash+=subhash++; }  // Fix duplicate wallets (same wallet info for multiple splits)
           chval+='<tr id="channel-'+reciphash+'">';
           chval+='<td class="boost"><span id="channel-'+reciphash+'-sats"></span></td>';
           chval+='<td class="boost"><span id="channel-'+reciphash+'-pct"></span></td>';
@@ -107,12 +109,14 @@ $episodeData = @file_get_contents('https://podcastindex.org/api/episodes/byfeedi
               $('#custom-handle').text(timesec);
 
               var evval='';
+              subhash=2;
               evval+='<table>';
               evval+='<tr><th class="boost">Sats</th><th class="boost">Percent</th><th>Name</th><th>Split</th><th>Fee</th></tr>';
               if(typeof item.value!='undefined'){
                 $.each(item.value.destinations, function(vindex, value) {
                   recip = value.address+'|'+value.customKey+'|'+value.customValue;  // Hash to define recipients
                   reciphash = recip.hashCode();
+                  if(evval.indexOf(reciphash) != -1){ reciphash+=subhash++; }  // Fix duplicate wallets (same wallet info for multiple splits)
                   evval+='<tr id="item-'+reciphash+'">';
                   evval+='<td class="boost"><span id="item-'+reciphash+'-sats"></span></td>';
                   evval+='<td class="boost"><span id="item-'+reciphash+'-pct"></span></td>';
