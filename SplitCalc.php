@@ -135,6 +135,7 @@ $episodeData = @file_get_contents('https://podcastindex.org/api/episodes/byfeedi
               // Populate Value Time Splits
               var remotevts=localvts='';
               var rcnt=lcnt=0;
+              lhash=rhash=2;
               remotevts+='Remote Items<table>';
               remotevts+='<tr><th class="boost">Sats</th><th class="boost">Percent</th><th>Start</th><th>Duration</th><th>Remote<br/>Start</th><th>Remote<br/>Percent</th><th>Notes</th></tr>';
               localvts+='Local Items<table>';
@@ -143,6 +144,7 @@ $episodeData = @file_get_contents('https://podcastindex.org/api/episodes/byfeedi
                 if(value.feedGuid==''){  // No feed guid means it must be a local VTS
                   recip = value.address+'|'+value.customKey+'|'+value.customValue;  // Hash to define recipients
                   reciphash = recip.hashCode();
+                  if(localvts.indexOf(reciphash) != -1){ reciphash+=lhash++; }  // Fix duplicate wallets (same wallet info for multiple splits)
                   localvts+='<tr id="local-'+reciphash+'">';
                   localvts+='<td class="boost"><span id="local-'+reciphash+'-sats"></span></td>';
                   localvts+='<td class="boost"><span id="local-'+reciphash+'-pct"></span></td>';
@@ -157,6 +159,7 @@ $episodeData = @file_get_contents('https://podcastindex.org/api/episodes/byfeedi
                 else{
                   recip = value.feedGuid+'|'+value.itemGuid;  // Hash to index VTS data
                   reciphash = recip.hashCode();
+                  if(remotevts.indexOf(reciphash) != -1){ reciphash+=rhash++; }  // Fix duplicate wallets (same wallet info for multiple splits)
                   remotevts+='<tr id="remote-'+reciphash+'">';
                   remotevts+='<td class="boost"><span id="remote-'+reciphash+'-sats"></span></td>';
                   remotevts+='<td class="boost"><span id="remote-'+reciphash+'-pct"></span></td>';
